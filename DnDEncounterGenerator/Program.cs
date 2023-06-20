@@ -51,6 +51,11 @@ app.MapPost("/monsters", async (Monster[] monsters, IRepository<Monster> reposit
         ? Results.CreatedAtRoute("GetMonsters", value: monsters)
         : Results.BadRequest());
 
+app.MapPut("/monster", async (Monster monster, IRepository<Monster> repository) =>
+    await repository.UpdateEntity(monster)
+        ? Results.Ok(monster)
+        : Results.BadRequest());
+
 app.MapGet("/monster/{id}", async (Guid id, IRepository<Monster> repository) => 
     await repository.GetEntity(id)
         is Monster monster
